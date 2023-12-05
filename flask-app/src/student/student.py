@@ -3,16 +3,19 @@ import json
 from src import db
 
 
-students = Blueprint('students', __name__)
+student = Blueprint('student', __name__)
 
 # Get all the products from the database
-@students.route('/students', methods=['GET'])
-def get_students():
+@student.route('/students/<studentID>/assignments/dueDate', methods=['GET'])
+def get_student(studentID):
     # get a cursor object from the database
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('SELECT * FROM student')
+    cursor.execute('''SELECT dueDate
+                   FROM homeworkAssignment
+                   JOIN onus.student s on s.studentId = homeworkAssignment.studentId
+                   WHERE s.studentId =''' + str(studentID))
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
