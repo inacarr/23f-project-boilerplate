@@ -40,14 +40,14 @@ def create_app():
 
     # Import the various Beluprint Objects
     from src.student.student import student
-    from src.projectmeeting.projectmeeting import project
+    # from src.project_meeting.projectmeeting import project
     from src.professor.professor import professor
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
     
     app.register_blueprint(student,    url_prefix='/s')
-    app.register_blueprint(project,   url_prefix='/proj')
+    # app.register_blueprint(project,   url_prefix='/proj')
     app.register_blueprint(professor,    url_prefix='/prof')
 
     # Don't forget to return the app object
