@@ -36,22 +36,19 @@ def create_app():
     def tester():
         return "<h1>this is a test!</h1>"
 
-
-
 #change this
 
     # Import the various Beluprint Objects
-    
-    from src.customers.customers import customers
-    from src.products.products  import products
     from src.student.student import student
+    from src.projectmeeting.projectmeeting import project
+    from src.professor.professor import professor
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
     
-    app.register_blueprint(customers,   url_prefix='/c')
-    app.register_blueprint(products,    url_prefix='/p')
     app.register_blueprint(student,    url_prefix='/s')
+    app.register_blueprint(project,   url_prefix='/proj')
+    app.register_blueprint(professor,    url_prefix='/prof')
 
     # Don't forget to return the app object
     return app
