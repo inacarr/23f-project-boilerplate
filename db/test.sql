@@ -12,3 +12,4 @@ JOIN onus.studentSection sS on s.sectionId = sS.sectionId
 JOIN onus.student s2 on s2.studentId = sS.studentId
 WHERE s2.studentId = 7
 
+DESC exam;

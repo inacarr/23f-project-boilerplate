@@ -61,9 +61,9 @@ def add_new_study_break(homeworkId):
 
 # delete a homework assignment 
 @student.route('/homeworkAssignment/<homeworkId>', methods=['DELETE'])
-def cancel_meeting(meeting_id):
+def delete_hw(meeting_id):
     # Constructing the delete query
-    query = f'DELETE FROM homeworkAssignment WHERE homeworkId' + str(homeworkId)
+    query = f'DELETE FROM homeworkAssignment WHERE homeworkId =' + str(homeworkId)
     
     # executing and committing the delete statement
     cursor = db.get_db().cursor()
@@ -78,7 +78,7 @@ def cancel_meeting(meeting_id):
 
 # check all homework submission grades
 @student.route('/student/<studentID>/homeworkSubmission/grade', methods=['GET'])
-def get_student(studentID):
+def get_hw_grades(studentID):
     # get a cursor object from the database
     cursor = db.get_db().cursor()
 
@@ -111,13 +111,12 @@ def get_student(studentID):
 
 # check all exams grades
 @student.route('/student/<studentID>/exam/grade', methods=['GET'])
-def get_student(studentID):
+def get_exam_grades(studentID):
     # get a cursor object from the database
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('''SELECT examId, grade
-                   FROM exam
+    cursor.execute('''SELECT examID, grade FROM exam
                    JOIN onus.course c on exam.courseId = c.courseId
                    JOIN onus.section s on c.courseId = s.courseId
                    JOIN onus.studentSection sS on s.sectionId = sS.sectionId
@@ -143,7 +142,7 @@ def get_student(studentID):
 
 # update student year
 @student.route('/student/<studentId>/<year>', methods=['PUT'])
-def update_meeting(meeting_id):
+def update_year(studentId):
     # collecting data from the request object
     the_data = request.json
     current_app.logger.info(the_data)
@@ -155,7 +154,7 @@ def update_meeting(meeting_id):
     # Constructing the query
     query = 'UPDATE student SET '
     query += f'year =' + str(year)
-    query += f'WHERE studentId =' str(studentId) 
+    query += f'WHERE studentId =' + str(studentId) 
     current_app.logger.info(query)
 
     # executing and committing the update statement
