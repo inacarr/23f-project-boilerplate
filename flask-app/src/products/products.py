@@ -34,7 +34,8 @@ def get_products():
 @products.route('/product/<id>', methods=['GET'])
 def get_product_detail (id):
 
-    query = 'SELECT id, product_name, description, list_price, category FROM products WHERE id = ' + str(id)
+    query = '''SELECT id, product_name, description, 
+    list_price, category FROM products WHERE id = ''' + str(id)
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()

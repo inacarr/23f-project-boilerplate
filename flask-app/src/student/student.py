@@ -5,8 +5,8 @@ from src import db
 
 student = Blueprint('student', __name__)
 
-# Get all the products from the database
-@student.route('/students/<studentID>/assignments/dueDate', methods=['GET'])
+# Return a list of all assignment due dates for a particular student
+@student.route('/student/<studentID>/assignments/dueDate', methods=['GET'])
 def get_student(studentID):
     # get a cursor object from the database
     cursor = db.get_db().cursor()
@@ -33,3 +33,32 @@ def get_student(studentID):
         json_data.append(dict(zip(column_headers, row)))
 
     return jsonify(json_data)
+
+# add a new studybreak 
+@student.route('/studyBreak/<homeworkId>', methods=['POST'])
+def add_new_study_break(studentID, homeworkId):
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    breakId = the_data['breakId']
+    startTime = the_data['startTime']
+    endTime = the_data['endTime']
+    homeworkID = homeworkId
+
+    # Constructing the query
+    query = 'insert into studyBreak (breakId, startTime, endTime, homeworkId) values ("'
+    query += breakId + '", "'
+    query += startTime + '", "'
+    query += endTime + '", '
+    query += homeworkID + ')'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
