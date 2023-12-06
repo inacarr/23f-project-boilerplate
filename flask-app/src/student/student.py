@@ -35,17 +35,13 @@ def get_student(studentID):
     return jsonify(json_data)
 
 # add a new studybreak 
-@student.route('/studyBreak/<breakId>/<homeworkId>', methods=['PUT'])
+@student.route('/studyBreak/<breakId>/<startTime>/<endTime>/<homeworkId>', methods=['PUT'])
 def add_new_study_break(homeworkId):
-    
-    # collecting data from the request object 
-    the_data = request.json
-    current_app.logger.info(the_data)
 
-    #extracting the variable
+    #extracting the variables
     breakId = breakId
-    startTime = the_data['startTime']
-    endTime = the_data['endTime']
+    startTime = startTime
+    endTime = endTime
     homeworkID = homeworkId
 
     # Constructing the query
@@ -67,7 +63,7 @@ def add_new_study_break(homeworkId):
 @student.route('/homeworkAssignment/<homeworkId>', methods=['DELETE'])
 def cancel_meeting(meeting_id):
     # Constructing the delete query
-    query = f'DELETE FROM homeworkAssignment WHERE homeworkId = {homeworkId}'
+    query = f'DELETE FROM homeworkAssignment WHERE homeworkId' + str(homeworkId)
     
     # executing and committing the delete statement
     cursor = db.get_db().cursor()
@@ -158,8 +154,8 @@ def update_meeting(meeting_id):
 
     # Constructing the query
     query = 'UPDATE student SET '
-    query += f"year = '{year}' "
-    query += f"WHERE studentId = '{studentId}'"
+    query += f'year =' + str(year)
+    query += f'WHERE studentId =' str(studentId) 
     current_app.logger.info(query)
 
     # executing and committing the update statement
