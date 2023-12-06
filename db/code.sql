@@ -128,6 +128,7 @@ CREATE TABLE IF NOT EXISTS groupMembers (
 CREATE TABLE IF NOT EXISTS exam (
     examId INT,
     date DATE,
+    grade INT,
     courseId INT,
     FOREIGN KEY (courseId) REFERENCES course(courseId)
 );

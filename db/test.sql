@@ -7,3 +7,5 @@ SELECT dueDate
 FROM homeworkAssignment
 JOIN onus.student s on s.studentId = homeworkAssignment.studentId
 WHERE s.studentId = 7
+
+De
